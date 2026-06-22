@@ -1,15 +1,9 @@
-/* =============================================
-   IEEE IGNITE — JavaScript
-   ============================================= */
-
-/* =============================================
-   1. NAVBAR — Scroll & Highlight
-   ============================================= */
-const navbar   = document.getElementById('navbar');
+/* NAVBAR */
+const navbar = document.getElementById('navbar');
 const navLinks = document.querySelectorAll('.nav-link');
 const sections = document.querySelectorAll('section[id]');
 
-// Scroll → sticky glass effect
+// Scroll
 window.addEventListener('scroll', () => {
   if (window.scrollY > 50) {
     navbar.classList.add('scrolled');
@@ -23,10 +17,10 @@ window.addEventListener('scroll', () => {
 function highlightActiveNav() {
   const scrollY = window.scrollY + 120;
   sections.forEach(section => {
-    const top    = section.offsetTop;
+    const top = section.offsetTop;
     const height = section.offsetHeight;
-    const id     = section.getAttribute('id');
-    const link   = document.querySelector(`.nav-link[href="#${id}"]`);
+    const id = section.getAttribute('id');
+    const link = document.querySelector(`.nav-link[href="#${id}"]`);
     if (link) {
       if (scrollY >= top && scrollY < top + height) {
         navLinks.forEach(l => l.classList.remove('active'));
@@ -38,7 +32,7 @@ function highlightActiveNav() {
 
 // Smooth scroll for all anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
+  anchor.addEventListener('click', function (e) {
     const target = document.querySelector(this.getAttribute('href'));
     if (target) {
       e.preventDefault();
@@ -49,12 +43,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-
-
-/* =============================================
-   2. HAMBURGER / MOBILE MENU
-   ============================================= */
-const hamburger  = document.getElementById('hamburger');
+/* MOBILE MENU*/
+const hamburger = document.getElementById('hamburger');
 const navLinksEl = document.getElementById('nav-links');
 
 function openMobileMenu() {
@@ -95,10 +85,7 @@ window.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
-
-/* =============================================
-   3. PARTICLE GENERATOR (Hero Section)
-   ============================================= */
+/* PARTICLE GENERATOR  */
 function createParticles() {
   const container = document.getElementById('particles');
   if (!container) return;
@@ -109,11 +96,11 @@ function createParticles() {
     const particle = document.createElement('div');
     particle.classList.add('particle');
 
-    const size     = Math.random() * 3 + 1;
-    const left     = Math.random() * 100;
+    const size = Math.random() * 3 + 1;
+    const left = Math.random() * 100;
     const duration = Math.random() * 12 + 8;
-    const delay    = -(Math.random() * 15);
-    const color    = colors[Math.floor(Math.random() * colors.length)];
+    const delay = -(Math.random() * 15);
+    const color = colors[Math.floor(Math.random() * colors.length)];
 
     particle.style.cssText = `
       left: ${left}%;
@@ -131,30 +118,28 @@ function createParticles() {
 createParticles();
 
 
-/* =============================================
-   4. EVENT FILTERING
-   ============================================= */
-const filterBtns  = document.querySelectorAll('.filter-btn');
-const eventCards  = document.querySelectorAll('.event-card');
-const noResults   = document.getElementById('no-results');
+/* EVENT FILTERING */
+const filterBtns = document.querySelectorAll('.filter-btn');
+const eventCards = document.querySelectorAll('.event-card');
+const noResults = document.getElementById('no-results');
 const searchInput = document.getElementById('search-input');
 const searchClear = document.getElementById('search-clear');
 
 let activeFilter = 'all';
-let searchQuery  = '';
+let searchQuery = '';
 
 function applyFilters() {
   let visibleCount = 0;
 
   eventCards.forEach((card, index) => {
     const category = card.getAttribute('data-category');
-    const title    = card.querySelector('.card-title').textContent.toLowerCase();
-    const desc     = card.querySelector('.card-desc').textContent.toLowerCase();
+    const title = card.querySelector('.card-title').textContent.toLowerCase();
+    const desc = card.querySelector('.card-desc').textContent.toLowerCase();
 
     const matchesFilter = activeFilter === 'all' || category === activeFilter;
     const matchesSearch = searchQuery === '' ||
-                          title.includes(searchQuery) ||
-                          desc.includes(searchQuery);
+      title.includes(searchQuery) ||
+      desc.includes(searchQuery);
 
     if (matchesFilter && matchesSearch) {
       card.classList.remove('hidden');
@@ -209,12 +194,9 @@ document.getElementById('footer-ev-interactive').addEventListener('click', () =>
   document.getElementById('filter-interactive').click();
 });
 
-
-/* =============================================
-   5. SCHEDULE TABS
-   ============================================= */
-const schedTabs    = document.querySelectorAll('.sched-tab');
-const schedPanels  = document.querySelectorAll('.schedule-table-wrapper');
+/* SCHEDULE TABS*/
+const schedTabs = document.querySelectorAll('.sched-tab');
+const schedPanels = document.querySelectorAll('.schedule-table-wrapper');
 
 schedTabs.forEach(tab => {
   tab.addEventListener('click', () => {
@@ -228,10 +210,7 @@ schedTabs.forEach(tab => {
   });
 });
 
-
-/* =============================================
-   6. FAQ ACCORDION
-   ============================================= */
+/* FAQ ACCORDION*/
 const faqItems = document.querySelectorAll('.faq-item');
 
 faqItems.forEach(item => {
@@ -254,10 +233,7 @@ faqItems.forEach(item => {
   });
 });
 
-
-/* =============================================
-   7. SCROLL REVEAL ANIMATIONS
-   ============================================= */
+/*SCROLL REVEAL ANIMATIONS*/
 const observerOptions = {
   threshold: 0.1,
   rootMargin: '0px 0px -60px 0px'
@@ -272,8 +248,6 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, observerOptions);
 
-// Elements to animate on scroll — each group gets its own stagger counter
-// so later groups (FAQ, stats, headers) don't inherit a huge accumulated delay.
 const revealGroups = [
   document.querySelectorAll('.about-card'),
   document.querySelectorAll('.event-card'),
@@ -282,7 +256,6 @@ const revealGroups = [
   document.querySelectorAll('.stat'),
   document.querySelectorAll('.section-header'),
 ];
-
 revealGroups.forEach(group => {
   Array.from(group).forEach((el, i) => {
     el.style.opacity = '0';
@@ -302,10 +275,6 @@ styleSheet.textContent = `
 `;
 document.head.appendChild(styleSheet);
 
-
-/* =============================================
-   8. KNOW MORE BUTTON (Modal)
-   ============================================= */
 const eventDetails = {
   'btn-webdev': {
     title: '🌐 Web Development Workshop',
@@ -524,15 +493,15 @@ document.head.appendChild(modalStyles);
 // Open modal
 document.querySelectorAll('.card-btn').forEach(btn => {
   btn.addEventListener('click', (e) => {
-    const btnId  = e.currentTarget.id;
-    const data   = eventDetails[btnId];
+    const btnId = e.currentTarget.id;
+    const data = eventDetails[btnId];
     if (!data) return;
 
     document.getElementById('modal-category').textContent = data.category;
-    document.getElementById('modal-title').textContent    = data.title;
-    document.getElementById('modal-details').textContent  = data.details;
+    document.getElementById('modal-title').textContent = data.title;
+    document.getElementById('modal-details').textContent = data.details;
     document.getElementById('modal-duration').textContent = data.duration;
-    document.getElementById('modal-prereq').textContent   = data.prerequisites;
+    document.getElementById('modal-prereq').textContent = data.prerequisites;
 
     modal.classList.add('show');
     document.body.style.overflow = 'hidden';
@@ -553,9 +522,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 
-/* =============================================
-   9. COUNTER ANIMATION (Stats)
-   ============================================= */
+/*  COUNTER ANIMATION (Stats)*/
 function animateCounter(el, target, suffix = '') {
   let current = 0;
   const increment = target / 50;
@@ -573,7 +540,7 @@ const statsObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       const statNums = document.querySelectorAll('.stat-num');
-      const targets  = [9, 2, 500, 20];
+      const targets = [9, 2, 500, 20];
       const suffixes = ['+', '', '+', '+'];
       statNums.forEach((el, i) => {
         animateCounter(el, targets[i], suffixes[i]);
@@ -586,10 +553,6 @@ const statsObserver = new IntersectionObserver((entries) => {
 const ctaSection = document.querySelector('.cta-section');
 if (ctaSection) statsObserver.observe(ctaSection);
 
-
-/* =============================================
-   10. INIT
-   ============================================= */
 // Initial highlight check
 highlightActiveNav();
 applyFilters();
